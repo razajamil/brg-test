@@ -1,4 +1,4 @@
-LIVE DEMO : https://brg-demo-270514.appspot.com/
+LIVE DEMO (takes a few seconds to load up) : https://brg-demo-270514.appspot.com/
 
 Built using node v12.4.1 and npm v6.13.4
 
