@@ -33,7 +33,6 @@ const useStyles = makeStyles(theme => ({
 
 const VirtualizedTrackRow = ({ index, style }) => {
   const { artist_top_tracks } = useArtists()
-  console.log(artist_top_tracks.tracks.length)
   return (
     <ListItem key={artist_top_tracks.tracks[index].name} style={style}>
       <ListItemIcon>
