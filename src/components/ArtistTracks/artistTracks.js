@@ -13,6 +13,7 @@ import {
   Button
 } from '@material-ui/core'
 import MusicNoteIcon from '@material-ui/icons/MusicNote'
+import { FixedSizeList } from 'react-window'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,6 +30,22 @@ const useStyles = makeStyles(theme => ({
     marginTop: 20
   }
 }))
+
+const VirtualizedTrackRow = ({ index, style }) => {
+  const { artist_top_tracks } = useArtists()
+  console.log(artist_top_tracks.tracks.length)
+  return (
+    <ListItem key={artist_top_tracks.tracks[index].name} style={style}>
+      <ListItemIcon>
+        <MusicNoteIcon />
+      </ListItemIcon>
+      <ListItemText
+        primary={artist_top_tracks.tracks[index].name}
+        secondary={`${artist_top_tracks.tracks[index].listeners} listeners`}
+      />
+    </ListItem>
+  )
+}
 
 const ArtistTracks = () => {
   const { artist_top_tracks, get_artist_top_tracks } = useArtists()
@@ -64,19 +81,14 @@ const ArtistTracks = () => {
               {artist_top_tracks.name}
             </Typography>
             <div className={classes.demo}>
-              <List>
-                {artist_top_tracks.tracks.map(track => (
-                  <ListItem key={track.name}>
-                    <ListItemIcon>
-                      <MusicNoteIcon />
-                    </ListItemIcon>
-                    <ListItemText
-                      primary={track.name}
-                      secondary={`${track.listeners} listeners`}
-                    />
-                  </ListItem>
-                ))}
-              </List>
+              <FixedSizeList
+                height={500}
+                width='100%'
+                itemSize={55}
+                itemCount={artist_top_tracks.tracks.length}
+              >
+                {VirtualizedTrackRow}
+              </FixedSizeList>
             </div>
           </Grid>
         </>

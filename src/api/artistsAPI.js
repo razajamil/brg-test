@@ -11,6 +11,6 @@ export const getTopArtistsByCountry = ({ country, page, resultsPerPage }) => {
 
 export const getArtistTopTracks = ({ artistID }) => {
   return Axios.get(
-    `https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&mbid=${artistID}&page=1&limit=5&api_key=${api_config.api_key}&format=${responseFormat}`
+    `https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&mbid=${artistID}&page=1&limit=100&api_key=${api_config.api_key}&format=${responseFormat}`
   )
 }
