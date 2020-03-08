@@ -66,7 +66,7 @@ const ArtistTracks = () => {
             <div className={classes.demo}>
               <List>
                 {artist_top_tracks.tracks.map(track => (
-                  <ListItem key={track.mbid}>
+                  <ListItem key={track.name}>
                     <ListItemIcon>
                       <MusicNoteIcon />
                     </ListItemIcon>

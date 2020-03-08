@@ -60,7 +60,7 @@ const TopArtists = () => {
       {arrayHasValue(top_artists) && !get_top_artists_api_status.loading && (
         <Grid container spacing={2} justify='center' className={classes.root}>
           {top_artists.slice(0, 5).map(artist => (
-            <Grid item lg={3} md={4} sm={6} xs={12}>
+            <Grid item lg={3} md={4} sm={6} xs={12} key={artist.mbid}>
               <ArtistCard artist={artist} />
             </Grid>
           ))}
