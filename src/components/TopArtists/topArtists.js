@@ -2,28 +2,24 @@ import React, { useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 
 import useArtists from '../../hooks/artists/useArtists'
-import { arrayHasValue, stringHasValue, objectHasValue } from '../../helpers'
-import PageCounter from './pageCounter'
-import { makeStyles, Typography } from '@material-ui/core'
-import List from '@material-ui/core/List'
-import ListItem from '@material-ui/core/ListItem'
-import Divider from '@material-ui/core/Divider'
-import ListItemText from '@material-ui/core/ListItemText'
-import ListItemAvatar from '@material-ui/core/ListItemAvatar'
-import Avatar from '@material-ui/core/Avatar'
+import { arrayHasValue, stringHasValue } from '../../helpers'
+import { makeStyles, Typography, Button, Grid } from '@material-ui/core'
 import Pagination from '@material-ui/lab/Pagination'
+import ArtistCard from './artistCard'
 
 const useStyles = makeStyles(theme => ({
   root: {
-    width: '100%',
-    maxWidth: 360,
-    backgroundColor: theme.palette.background.paper
+    flexGrow: 1
   },
   inline: {
     display: 'inline'
   },
   paginationContainer: {
-    marginTop: 40
+    marginTop: 40,
+    marginBottom: 40,
+    '& ul.MuiPagination-ul': {
+      justifyContent: 'center'
+    }
   },
   avatar: {
     cursor: 'pointer'
@@ -46,9 +42,8 @@ const TopArtists = () => {
     }
   }
 
-  const handleArtistClick = artist => {
-    if (objectHasValue(artist) && stringHasValue(artist.mbid))
-      history.push(`/artist/${artist.mbid}`)
+  const handleBackClick = () => {
+    history.goBack()
   }
 
   useEffect(() => {
@@ -63,26 +58,13 @@ const TopArtists = () => {
   return (
     <div style={{ marginTop: '20px' }}>
       {arrayHasValue(top_artists) && !get_top_artists_api_status.loading && (
-        <List className={classes.root}>
-          {top_artists.map(artist => (
-            <React.Fragment key={artist.name + artist.mbid}>
-              <ListItem alignItems='flex-start'>
-                <ListItemAvatar onClick={() => handleArtistClick(artist)}>
-                  <Avatar
-                    className={classes.avatar}
-                    alt='Remy Sharp'
-                    src={artist.image[2]['#text']}
-                  />
-                </ListItemAvatar>
-                <ListItemText
-                  primary={artist.name}
-                  secondary={`${artist.listeners} listeners`}
-                />
-              </ListItem>
-              <Divider variant='inset' component='li' />
-            </React.Fragment>
+        <Grid container spacing={2} justify='center' className={classes.root}>
+          {top_artists.slice(0, 5).map(artist => (
+            <Grid item lg={3} md={4} sm={6} xs={12}>
+              <ArtistCard artist={artist} />
+            </Grid>
           ))}
-        </List>
+        </Grid>
       )}
 
       {arrayHasValue(top_artists) && !get_top_artists_api_status.loading && (
@@ -98,7 +80,19 @@ const TopArtists = () => {
       )}
 
       {!arrayHasValue(top_artists) && get_top_artists_api_status.success && (
-        <Typography>No results found, please try again</Typography>
+        <>
+          <Typography>No results found, please try again</Typography>
+          {history.length > 2 && (
+            <Button
+              variant='outlined'
+              size='small'
+              style={{ marginTop: 10 }}
+              onClick={handleBackClick}
+            >
+              Back
+            </Button>
+          )}
+        </>
       )}
     </div>
   )

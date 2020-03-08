@@ -13,7 +13,9 @@ const useArtists = () => {
     get_top_artists_api_status
   } = useSelector(topArtistsSelector)
 
-  const { artist_top_tracks } = useSelector(artistTopTracksSelector)
+  const { artist_top_tracks, get_artist_top_tracks_api_status } = useSelector(
+    artistTopTracksSelector
+  )
 
   const getTopArtists = ({ country, page, resultsPerPage }) => {
     dispatch(
@@ -32,6 +34,7 @@ const useArtists = () => {
     get_top_artists: getTopArtists,
     get_top_artists_api_status,
     get_artist_top_tracks: getArtistTopTracks,
+    get_artist_top_tracks_api_status,
     artist_top_tracks
   }
 }

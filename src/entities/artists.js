@@ -21,6 +21,7 @@ const artists = {
     },
 
     artist_top_tracks: {},
+
     get_artist_top_tracks_api_status: {
       loading: false,
       success: false,
@@ -40,6 +41,8 @@ const artists = {
     loading: {
       reducer: (state, action) => {
         const { country, page, resultsPerPage } = action.payload
+
+        state.top_artists = {}
         state.get_top_artists_api_status = {
           loading: true,
           success: false,
@@ -107,7 +110,10 @@ const artists = {
       ),
     loading: {
       reducer: (state, action) => {
+        const { artistID, artistName } = action.payload
+
         state.artist_top_tracks = {}
+
         state.get_artist_top_tracks_api_status = {
           loading: true,
           success: false,
@@ -164,6 +170,8 @@ export const topArtistsSelector = state => {
 
 export const artistTopTracksSelector = state => {
   return {
-    artist_top_tracks: state[ARTISTS].artist_top_tracks
+    artist_top_tracks: state[ARTISTS].artist_top_tracks,
+    get_artist_top_tracks_api_status:
+      state[ARTISTS].get_artist_top_tracks_api_status
   }
 }

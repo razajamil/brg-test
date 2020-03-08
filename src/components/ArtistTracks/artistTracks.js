@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react'
 import useArtists from '../../hooks/artists/useArtists'
 import { useParams, useHistory } from 'react-router-dom'
-import { S_PageHeading } from '../Styles/pageHeading'
 import { objectHasValue } from '../../helpers'
 import {
   Grid,
@@ -25,6 +24,9 @@ const useStyles = makeStyles(theme => ({
   },
   title: {
     margin: theme.spacing(4, 0, 2)
+  },
+  paginationContainer: {
+    marginTop: 20
   }
 }))
 
@@ -48,34 +50,36 @@ const ArtistTracks = () => {
   return (
     <div>
       {objectHasValue(artist_top_tracks) && (
-        <Grid item xs={12} md={6}>
-          <Typography variant='h6' className={classes.title}>
-            <Button
-              variant='outlined'
-              size='small'
-              style={{ float: 'left' }}
-              onClick={handleBackClick}
-            >
-              Back
-            </Button>
-            {artist_top_tracks.name}
-          </Typography>
-          <div className={classes.demo}>
-            <List>
-              {artist_top_tracks.tracks.map(track => (
-                <ListItem>
-                  <ListItemIcon>
-                    <MusicNoteIcon />
-                  </ListItemIcon>
-                  <ListItemText
-                    primary={track.name}
-                    secondary={`${track.listeners} listeners`}
-                  />
-                </ListItem>
-              ))}
-            </List>
-          </div>
-        </Grid>
+        <>
+          <Grid item xs={12}>
+            <Typography variant='h6' className={classes.title}>
+              <Button
+                variant='outlined'
+                size='small'
+                style={{ float: 'left' }}
+                onClick={handleBackClick}
+              >
+                Back
+              </Button>
+              {artist_top_tracks.name}
+            </Typography>
+            <div className={classes.demo}>
+              <List>
+                {artist_top_tracks.tracks.map(track => (
+                  <ListItem key={track.mbid}>
+                    <ListItemIcon>
+                      <MusicNoteIcon />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={track.name}
+                      secondary={`${track.listeners} listeners`}
+                    />
+                  </ListItem>
+                ))}
+              </List>
+            </div>
+          </Grid>
+        </>
       )}
     </div>
   )
